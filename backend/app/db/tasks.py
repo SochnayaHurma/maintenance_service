@@ -1,0 +1,39 @@
+import logging
+import os
+
+from fastapi import FastAPI
+from databases import Database
+
+from app.core.config import DATABASE_URL, DEBUG
+
+logger = logging.getLogger(__name__)
+
+
+async def connect_to_db(app: FastAPI) -> None:
+    DB_URL = f"{DATABASE_URL}_test" if os.environ.get("TESTING") else DATABASE_URL
+    if DEBUG:
+        from app.db.databases_logger import DatabaseByLogger
+        database_class = DatabaseByLogger
+    else:
+        database_class = Database
+    database = database_class(
+        DB_URL,
+        min_size=2,
+        max_size=10
+    )
+    try:
+        await database.connect()
+        app.state._db = database
+    except Exception as e:
+        logger.warning("--- DB CONNECTION ERROR ---")
+        logger.warning(e)
+        logger.warning("--- DB CDNNECTION ERROR ---")
+
+
+async def close_db_connection(app: FastAPI) -> None:
+    try:
+        await app.state._db.disconnect()
+    except Exception as e:
+        logger.warning("--- DB DISCONNECT ERROR ---")
+        logger.warning(e)
+        logger.warning("--- DB DISCONNECT ERROR ---")

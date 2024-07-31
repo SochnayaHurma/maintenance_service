@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+.idea/
+.env
+.pytest_cache/
+front.txt
+readme.md
+docker-compose.yml
+/*/Dockerfile
+poetry.lock

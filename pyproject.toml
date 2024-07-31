@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "maintenance-service"
+version = "0.1.0"
+description = ""
+authors = ["Ben <dia_v3@rambler.ru>"]
+readme = "README.md"
+packages = [{include = "maintenance_service"}]
+
+[tool.poetry.dependencies]
+python = "3.12.4"
+uvicorn = "^0.30.3"
+pydantic = "^2.8.2"
+email-validator = "^2.2.0"
+python-multipart = "^0.0.9"
+databases = {extras = ["postgresql"], version = "^0.9.0"}
+sqlalchemy = "^2.0.31"
+alembic = "^1.13.2"
+psycopg2-binary = "^2.9.9"
+pyjwt = "^2.8.0"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+pytest-asyncio = "^0.23.8"
+httpx = "^0.27.0"
+asgi-lifespan = "^2.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
